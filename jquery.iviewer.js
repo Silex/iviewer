@@ -829,12 +829,26 @@ $.widget( "ui.iviewer", $.ui.mouse, {
                 return this.current_zoom;
             case 'options':
                 return this.options;
+            case 'img_object':
+                return this.img_object;
             case 'src':
                 return this.img_object.object().attr('src');
             case 'coords':
                 return {
                     x: this.img_object.x(),
                     y: this.img_object.y()
+                };
+            case 'frame':
+                var w = 1. * this.img_object.orig_width();
+                var h = 1. * this.img_object.orig_height();
+                var upperleft = this.containerToImage(0, 0);
+                var lowerright = this.containerToImage(this.container.width(), this.container.height());
+                // Return values in percentage
+                return {
+                    x: upperleft.x / w,
+                    y: upperleft.y / h,
+                    w: (lowerright.x - upperleft.x) / w,
+                    h: (lowerright.y - upperleft.y) / h
                 };
         }
     },
